@@ -1,25 +1,26 @@
 window.onload = function(){
     var search = document.querySelector("button");
-    //var result = document.querySelector(".result");
-    //var query = document.querySelector("input");
+    var result = document.querySelector(".result");
+    var query = document.querySelector("input");
     search.addEventListener('click', handleClick);
     var httpRequest = new XMLHttpRequest();
     
     function handleClick(clickEvent){
         clickEvent.preventDefault();
-        var url = "superheroes.php" ;
+        
+        var url = "superheroes.php?query=" + query.value ;
         httpRequest.onreadystatechange = fetchingdata;
-        httpRequest.open('GET', url, true);
+        httpRequest.open('GET', url);
         httpRequest.send();
     }
     function fetchingdata(){
         if (httpRequest.readyState === XMLHttpRequest.DONE){
             if (httpRequest.status === 200){
                 var response = httpRequest.responseText;
-                alert(response)
+                result.innerHTML= response;
             }
             else{
-                alert('not workinh')
+                result.innerHTML = "Error: This resquest can not be delivered. Please try again.";
             }
         }
     }
